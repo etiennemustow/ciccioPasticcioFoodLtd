@@ -1,5 +1,12 @@
 version: 2
 jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+      - image: circleci/postgres:12-alpine
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: circle_test
   deploy:
     docker:
       - image: buildpack-deps:trusty
@@ -14,7 +21,10 @@ workflows:
   version: 2
   build-deploy:
     jobs:
+      - build
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: master
