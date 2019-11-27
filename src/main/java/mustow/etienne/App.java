@@ -20,7 +20,8 @@ public class App {
 
     private static void routes() {
         get("/", (req, res) -> "Hello World");
-        get("/db", (req, res) -> new DBConnector().healthcheck());
+        get("/db/tables", (req, res) -> new DBConnector().tables());
+        get("/db/create", (req, res) -> new DBConnector().createTable(req));
     }
 
     private static int getPort() {
