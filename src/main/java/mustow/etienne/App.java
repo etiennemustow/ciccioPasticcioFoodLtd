@@ -15,7 +15,7 @@ public class App {
         int port = getPort();
         LOGGER.info("The {} will be used", port);
         Spark.port(port);
-        get("/", (req, res) -> "Hello World");
+        get("/", (req, res) -> "Hello World from Circle CI");
     }
 
     private static int getPort() {
