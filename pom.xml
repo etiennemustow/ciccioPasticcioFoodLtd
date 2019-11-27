@@ -54,6 +54,7 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>my-app</finalName>
                 </configuration>
             </plugin>
             <plugin>
