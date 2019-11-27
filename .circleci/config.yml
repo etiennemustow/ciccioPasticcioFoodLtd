@@ -1,15 +1,15 @@
 version: 2
 jobs:
   build:
-    deploy:
-      docker:
-        - image: buildpack-deps:trusty
-      steps:
-        - checkout
-        - run:
-            name: Deploy Master to Heroku
-            command: |
-              echo $HEROKU_API_KEY
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            echo $HEROKU_API_KEY
 
 workflows:
   version: 2
