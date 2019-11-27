@@ -4,8 +4,8 @@ jobs:
     docker:
       - image: buildpack-deps:trusty
 
-      steps:
-        mvn clean install
+    steps:
+      mvn clean install
 
   deploy:
     docker:
