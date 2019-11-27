@@ -1,7 +1,12 @@
 version: 2
 jobs:
   build:
-    - image: buildpack-deps:trusty
+    docker:
+      - image: buildpack-deps:trusty
+
+      steps:
+        mvn clean install
+
   deploy:
     docker:
       - image: buildpack-deps:trusty
