@@ -1,27 +1,24 @@
 package mustow.etienne;
 
+import mustow.etienne.web.Routes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
 
-import static spark.Spark.get;
-
 public class App {
 
-    public static final int DEFAULT_PORT = 8080;
+    private static final int DEFAULT_PORT = 8080;
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
+        startServer();
+        deployRoutes();
+    }
+
+    private static void startServer() {
         int port = getPort();
         LOGGER.info("The {} will be used", port);
         Spark.port(port);
-        routes();
-    }
-
-    private static void routes() {
-        get("/", (req, res) -> "Hello World");
-        get("/db/tables", (req, res) -> new DBConnector().tables());
-        get("/db/create", (req, res) -> new DBConnector().createTable(req));
     }
 
     private static int getPort() {
@@ -30,6 +27,10 @@ public class App {
             return DEFAULT_PORT;
         }
         return Integer.parseInt(portString);
+    }
+
+    private static void deployRoutes() {
+        Routes.generate();
     }
 
 }
