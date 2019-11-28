@@ -1,0 +1,16 @@
+title Create New Customer
+actor Employee
+boundary Api
+control CustomerService
+participant CustomerFactory
+database CustomerRepository
+Employee->Api: post:customer?name=mike
+Api->CustomerService: createCustomer(params)
+activate CustomerService
+CustomerService->CustomerFactory: createCustomer(customer)
+CustomerFactory-->CustomerService:customer
+CustomerService->CustomerRepository:addCustomer(customer)
+CustomerRepository-->CustomerService: response
+CustomerService-->Api:response
+deactivate CustomerService
+Employee<--Api:response status 200

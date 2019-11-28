@@ -1,0 +1,13 @@
+title Create Category
+actor Employee
+boundary Api
+control CategoryService
+database CategoryRepository
+
+Employee->Api: post:product/create?category=fruit
+Api->CategoryService: createCategory(name)
+CategoryService->CategoryRepository:getCategoryById(name)
+CategoryRepository-->CategoryService: response
+CategoryService->CategoryRepository:add(name)
+CategoryRepository-->CategoryService: response
+CategoryService-->Api: response

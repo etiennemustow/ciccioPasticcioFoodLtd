@@ -1,0 +1,13 @@
+title Display All Orders
+actor Sales Team
+boundary API
+control Order Service
+database Order Repository
+Sales Team->API:get:order/
+API->Order Service:getOrders()
+activate Order Service
+Order Service->Order Repository:getOrders()
+Order Repository-->Order Service:orderList
+Order Service-->API:orderList
+deactivate Order Service
+API-->Sales Team:200 OK

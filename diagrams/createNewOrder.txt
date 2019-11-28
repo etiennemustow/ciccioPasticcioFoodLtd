@@ -1,0 +1,37 @@
+title Create New Order
+actor Sales Team
+boundary API
+control Order Service
+control Customer Service
+control Product Service
+entity Product
+database Customer Repository
+database Order Repository
+database Product Repository
+Sales Team->API:post:order/{orderParamsInBody}
+API->Order Service:createOrder(orderParams)
+activate Order Service
+Order Service->Customer Service:verifyCustomer(customerId)
+activate Customer Service
+Customer Service->Customer Repository:getCustomer(customerId)
+Customer Repository-->Customer Service:customer
+Customer Service-->Order Service:exists
+deactivate Customer Service
+Order Service->Product Service:verifyProducts(products)
+activate Product Service
+Product Service->Product Repository:getProducts()
+Product Repository-->Product Service:products
+Product Service->Product:verify()
+note right of Product:verifying that product has stock and is not discontinued
+Product-->Product Service:true
+Product Service-->Order Service:true
+deactivate Product Service
+Order Service->Order Factory:createNewOrder(orderParams)
+activate Order Factory
+Order Factory-->Order Service:order
+deactivate Order Factory
+Order Service->Order Repository:saveOrder(order)
+Order Repository-->Order Service:response
+Order Service-->API:response
+deactivate Order Service
+API-->Sales Team:200 OK

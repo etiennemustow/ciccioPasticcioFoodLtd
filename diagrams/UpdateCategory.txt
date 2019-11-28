@@ -1,0 +1,16 @@
+title Update category
+
+actor Employee
+boundary Api
+control CategoryService
+database CategoryRepository
+
+Employee->Api: patch:employee/?args
+Api->CategoryService: updateEmployee(args)
+activate CategoryService
+CategoryService->CategoryRepository: getCategoryByName(name)
+CategoryRepository-->CategoryService: response
+CategoryService->CategoryRepository: update(category)
+CategoryRepository-->CategoryService: response
+deactivate EmployeeService
+CategoryService-->Api:response status 200

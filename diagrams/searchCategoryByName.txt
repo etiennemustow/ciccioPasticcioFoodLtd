@@ -1,0 +1,14 @@
+title Search category by name
+
+actor Employee
+boundary Api
+control CategoryService
+database CategoryRepository
+
+Employee->Api: get:product/?args
+Api->CategoryService: findCategory(args)
+CategoryService->Catalog: FindCategory(name)
+Catalog->CategoryRepository: getCategoryByName(name)
+CategoryRepository->Catalog: Category
+Catalog-->CategoryService: Category
+CategoryService-->Api:response status 200

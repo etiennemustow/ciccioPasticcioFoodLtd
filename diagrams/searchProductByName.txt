@@ -1,0 +1,15 @@
+title Search product by name
+
+actor Employee
+boundary Api
+control ProductService
+participant Catalog
+database ProductRepository
+
+Employee->Api: post:product/find?sku=123
+Api->ProductService: findProduct(sku)
+ProductService->Catalog: FindProduct(sku)
+Catalog->ProductRepository: getProductBySKU(sku)
+ProductRepository->Catalog: Product
+Catalog-->ProductService: Product
+ProductService-->Api:response status 200

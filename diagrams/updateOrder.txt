@@ -1,0 +1,13 @@
+title Update Order
+actor Sales Team
+boundary API
+control Order Service
+database Order Repository
+Sales Team->API:put:order/{orderId}
+API->Order Service:updateOrder()
+activate Order Service
+Order Service->Order Repository:updateOrder()
+Order Repository-->Order Service:response
+Order Service-->API:response
+deactivate Order Service
+API-->Sales Team:200 OK

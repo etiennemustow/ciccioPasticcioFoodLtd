@@ -1,0 +1,19 @@
+title Update product
+
+actor Employee
+boundary Api
+control ProductService
+participant Catalogue
+database ProductRepository
+
+Employee->Api: post:product/update?name=mike
+Api->ProductService: updateProduct(query)
+activate ProductService
+ProductService->Catalogue: checkExistance(sku)
+Catalogue->ProductRepository: getProductBySKU(sku)
+ProductRepository-->Catalogue:Prouduct()
+Catalogue-->ProductService: Prouduct()
+ProductService->ProductRepository: update(employee)
+ProductRepository-->ProductService: response
+deactivate ProductService
+ProductService-->Api:response status 200

@@ -1,0 +1,18 @@
+title Create new employee
+
+actor Employee
+boundary Api
+control EmployeeService
+participant EmployeeFactory
+database EmployeeRepository
+
+Employee->Api: post:employee/create?name=mike
+Api->EmployeeService: createNewEmployee(query)
+activate EmployeeService
+EmployeeService->EmployeeRepository: getEmployeeByName(employee)
+EmployeeRepository-->EmployeeService: response
+EmployeeService->EmployeeFactory: createNew(employee)
+EmployeeFactory->EmployeeRepository: add(employee)
+EmployeeRepository-->EmployeeService: response
+deactivate EmployeeService
+EmployeeService-->Api:response status 200

@@ -1,0 +1,21 @@
+title Create new product
+
+actor Employee
+boundary Api
+control ProductService
+participant Catalogue
+participant ProductFactory
+database ProductRepository
+
+Employee->Api: post:product/create?name=pears
+Api->ProductService: createNewProduct(query)
+activate ProductService
+ProductService->Catalogue: checkExistance(product)
+Catalogue->ProductRepository: getProductBySKU(sku)
+ProductRepository-->Catalogue: Product()
+Catalogue-->ProductService: Product()
+ProductService->ProductFactory: createNew(product)
+ProductFactory->ProductRepository: add(product)
+ProductRepository-->ProductService: response
+deactivate ProductService
+ProductService-->Api:response status 200

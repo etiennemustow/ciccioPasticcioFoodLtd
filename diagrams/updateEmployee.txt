@@ -1,0 +1,16 @@
+title Update employee
+
+actor Employee
+boundary Api
+control EmployeeService
+database EmployeeRepository
+
+Employee->Api: patch:employee/update?name=mike
+Api->EmployeeService: updateEmployee(query)
+activate EmployeeService
+EmployeeService->EmployeeRepository:getEmployeeByName(name)
+EmployeeRepository-->EmployeeService:Employee
+EmployeeService->EmployeeRepository: update(employee)
+EmployeeRepository-->EmployeeService: response
+deactivate EmployeeService
+EmployeeService-->Api:response status 200

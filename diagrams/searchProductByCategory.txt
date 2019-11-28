@@ -1,0 +1,15 @@
+title Search product by category
+
+actor Employee
+boundary Api
+control ProductService
+participant Catalog
+database ProductRepository
+
+Employee->Api: post:product/find?category=fruit
+Api->ProductService: findProductByCategory(name)
+ProductService->Catalog: FindProducts(category)
+Catalog->ProductRepository: getProductsByCategory(name)
+ProductRepository->Catalog: List<Product>
+Catalog-->ProductService: List<Product>
+ProductService-->Api:response status 200

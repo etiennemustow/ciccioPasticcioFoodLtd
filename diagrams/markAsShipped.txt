@@ -1,0 +1,13 @@
+title Mark As Shipped
+actor Ops Team
+boundary API
+control Order Service
+database Order Repository
+Ops Team->API:put:order/shipped/{orderId}
+API->Order Service:markAsShipped(orderId)
+activate Order Service
+Order Service->Order Repository:markAsShipped(orderId)
+Order Repository-->Order Service:shipped
+Order Service-->API:shipped
+deactivate Order Service
+API-->Ops Team:200 OK
